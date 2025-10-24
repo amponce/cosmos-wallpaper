@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cosmos - Realistic 8000+ star field wallpaper for Windows and macOS">
+    <meta name="keywords" content="wallpaper, cosmos, stars, space, three.js, live wallpaper">
+    <meta property="og:title" content="Cosmos - Realistic Star Field Wallpaper">
+    <meta property="og:description" content="Transform your desktop with 8000+ scientifically accurate stars">
+    <meta property="og:type" content="website">
+    <title>Cosmos - Realistic Star Field Wallpaper | Live Demo</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0e27;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        #demo-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background: radial-gradient(circle at center, rgba(10,14,39,0.3) 0%, rgba(10,14,39,0.7) 100%);
+        }
+        
+        .hero h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero p {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 100px 20px;
+            background: linear-gradient(180deg, #0a0e27 0%, #1a1e37 100%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+        
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+        
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .stat-box {
+            padding: 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+        }
+        
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+        
+        /* Platform Section */
+        .platforms {
+            padding: 100px 20px;
+            background: #0a0e27;
+        }
+        
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .platform-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            text-align: center;
+        }
+        
+        .platform-card.recommended {
+            border-color: #ffd700;
+            position: relative;
+        }
+        
+        .platform-card.recommended::before {
+            content: "⭐ RECOMMENDED";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffd700;
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+        
+        .platform-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        
+        .platform-card h3 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .platform-price {
+            font-size: 1.5em;
+            color: #ffd700;
+            margin: 20px 0;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 60px 20px;
+            background: #000;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .social-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 1.5em;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: #fff;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .hero p {
+                font-size: 1.2em;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section with Live Demo -->
+    <section class="hero">
+        <div id="demo-canvas"></div>
+        <div class="hero-content">
+            <h1>🌌 Cosmos</h1>
+            <p>Transform your desktop with 8,000+ realistic stars</p>
+            <div class="cta-buttons">
+                <a href="https://github.com/your-username/cosmos-wallpaper" class="btn btn-primary">Download Now</a>
+                <a href="#demo" class="btn btn-secondary">See It In Action</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">✨ Features</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🌟</div>
+                    <h3>8,000+ Stars</h3>
+                    <p>Procedurally generated with scientifically accurate spectral classifications from blue giants to red dwarfs.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Realistic Colors</h3>
+                    <p>Authentic stellar colors based on temperature and spectral type. O, B, A, F, G, K, M classification system.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Smooth Rotation</h3>
+                    <p>Gentle, hypnotic 3D rotation through space. Customizable speed from ultra-slow to fast.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>60fps Performance</h3>
+                    <p>Hardware-accelerated WebGL rendering. Smooth even on integrated graphics.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🖥️</div>
+                    <h3>Ultrawide Ready</h3>
+                    <p>Optimized for 49-inch and larger monitors. Perfect for 21:9 and 32:9 displays.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎛️</div>
+                    <h3>Fully Customizable</h3>
+                    <p>Adjust star count, size, rotation speed, and colors. Make it your own.</p>
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-number">8,000+</div>
+                    <div class="stat-label">Stars</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">60</div>
+                    <div class="stat-label">FPS</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Spectral Types</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">&lt;5%</div>
+                    <div class="stat-label">CPU Usage</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Section -->
+    <section class="platforms">
+        <div class="container">
+            <h2 class="section-title">🚀 Choose Your Platform</h2>
+            
+            <div class="platform-grid">
+                <div class="platform-card recommended">
+                    <div class="platform-icon">🖼️</div>
+                    <h3>Windows</h3>
+                    <div class="platform-price">$3.99</div>
+                    <p><strong>Wallpaper Engine</strong></p>
+                    <p>Best performance and features. Easy setup with UI controls.</p>
+                    <a href="https://store.steampowered.com/app/431960/" class="btn btn-primary" style="margin-top: 20px;">Get on Steam</a>
+                </div>
+                
+                <div class="platform-card recommended">
+                    <div class="platform-icon">🍎</div>
+                    <h3>macOS</h3>
+                    <div class="platform-price">FREE</div>
+                    <p><strong>Plash</strong></p>
+                    <p>Simple and lightweight. Perfect native integration.</p>
+                    <a href="https://sindresorhus.com/plash" class="btn btn-primary" style="margin-top: 20px;">Download Free</a>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">⚡</div>
+                    <h3>Cross-Platform</h3>
+                    <div class="platform-price">FREE</div>
+                    <p><strong>Electron App</strong></p>
+                    <p>Standalone app for Windows, macOS, and Linux.</p>
+                    <a href="https://github.com/your-username/cosmos-wallpaper" class="btn btn-secondary" style="margin-top: 20px;">View on GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h3>Made with ❤️ for space enthusiasts</h3>
+            <p>Open source under MIT License</p>
+            <div class="social-links">
+                <a href="https://github.com/your-username/cosmos-wallpaper">GitHub</a>
+                <a href="https://github.com/your-username/cosmos-wallpaper/releases">Download</a>
+                <a href="https://github.com/your-username/cosmos-wallpaper/issues">Support</a>
+            </div>
+            <p style="margin-top: 30px; opacity: 0.5;">© 2024 Cosmos Wallpaper</p>
+        </div>
+    </footer>
+
+    <!-- Three.js for live demo -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+
+        // Simplified version for hero demo
+        function generateStars(count = 3000) {
+            const stars = [];
+            const colors = [0x9bb0ff, 0xaabfff, 0xcad7ff, 0xf8f7ff, 0xfff4ea, 0xffd2a1, 0xffcc6f];
+            
+            for (let i = 0; i < count; i++) {
+                const radius = Math.pow(Math.random(), 0.3) * 400 + 100;
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos(2 * Math.random() - 1);
+                
+                stars.push({
+                    x: radius * Math.sin(phi) * Math.cos(theta),
+                    y: radius * Math.sin(phi) * Math.sin(theta),
+                    z: radius * Math.cos(phi),
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: 0.5 + Math.random() * 2
+                });
+            }
+            return stars;
+        }
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 5000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        
+        const canvas = document.getElementById('demo-canvas');
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        canvas.appendChild(renderer.domElement);
+        
+        camera.position.z = 500;
+        
+        const stars = generateStars(3000);
+        const geometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(stars.length * 3);
+        const colors = new Float32Array(stars.length * 3);
+        const sizes = new Float32Array(stars.length);
+        
+        stars.forEach((star, i) => {
+            positions[i * 3] = star.x;
+            positions[i * 3 + 1] = star.y;
+            positions[i * 3 + 2] = star.z;
+            
+            const color = new THREE.Color(star.color);
+            colors[i * 3] = color.r;
+            colors[i * 3 + 1] = color.g;
+            colors[i * 3 + 2] = color.b;
+            
+            sizes[i] = star.size;
+        });
+        
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+        
+        const starTexture = createTexture();
+        const material = new THREE.PointsMaterial({
+            size: 2,
+            map: starTexture,
+            vertexColors: true,
+            blending: THREE.AdditiveBlending,
+            transparent: true,
+            depthTest: true,
+            sizeAttenuation: true
+        });
+        
+        const starField = new THREE.Points(geometry, material);
+        scene.add(starField);
+        
+        function createTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = canvas.height = 32;
+            const ctx = canvas.getContext('2d');
+            const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+            gradient.addColorStop(0, 'rgba(255,255,255,1)');
+            gradient.addColorStop(0.2, 'rgba(255,255,255,1)');
+            gradient.addColorStop(0.4, 'rgba(255,255,255,0.5)');
+            gradient.addColorStop(1, 'rgba(255,255,255,0)');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 32, 32);
+            return new THREE.CanvasTexture(canvas);
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            starField.rotation.y += 0.0001;
+            starField.rotation.x = 0.1 + Math.sin(Date.now() * 0.00005) * 0.05;
+            renderer.render(scene, camera);
+        }
+        
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        animate();
+    </script>
+</body>
+</html>

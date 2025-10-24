@@ -1,0 +1,36 @@
+{
+  "name": "cosmos-wallpaper",
+  "version": "1.0.0",
+  "description": "Animated cosmos wallpaper application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build-win": "electron-builder --win",
+    "build-mac": "electron-builder --mac"
+  },
+  "keywords": ["wallpaper", "cosmos", "stars", "3d"],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "com.cosmos.wallpaper",
+    "productName": "Cosmos Wallpaper",
+    "files": [
+      "main.js",
+      "index.html",
+      "package.json"
+    ],
+    "win": {
+      "target": ["nsis"],
+      "icon": "build/icon.ico"
+    },
+    "mac": {
+      "target": ["dmg"],
+      "icon": "build/icon.icns",
+      "category": "public.app-category.entertainment"
+    }
+  }
+}
