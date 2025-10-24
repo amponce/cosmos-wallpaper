@@ -1,0 +1,41 @@
+{
+  "description": "Interactive 3D cosmos visualization with 8000+ realistic stars rotating through space. Perfect for ultrawide monitors.",
+  "file": "cosmos-wallpaper.html",
+  "general": {
+    "properties": {
+      "rotationspeed": {
+        "order": 0,
+        "text": "Rotation Speed",
+        "type": "slider",
+        "value": 1.0,
+        "max": 5.0,
+        "min": 0.0,
+        "precision": 1,
+        "step": 0.1
+      },
+      "starcount": {
+        "order": 1,
+        "text": "Star Count",
+        "type": "slider",
+        "value": 8000,
+        "max": 15000,
+        "min": 3000,
+        "precision": 0,
+        "step": 500
+      },
+      "starsize": {
+        "order": 2,
+        "text": "Star Size",
+        "type": "slider",
+        "value": 1.5,
+        "max": 3.0,
+        "min": 0.5,
+        "precision": 1,
+        "step": 0.1
+      }
+    }
+  },
+  "title": "Cosmos - Realistic Star Field",
+  "type": "web",
+  "version": 1
+}
