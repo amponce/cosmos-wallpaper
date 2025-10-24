@@ -182,4 +182,3 @@ MIT License - see LICENSE file for details.
 
 - Bug reports: Open an issue
 - Feature requests: Open a discussion
-- Email: contact@amponce.dev
