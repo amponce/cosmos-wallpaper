@@ -2,7 +2,6 @@
 
 A live wallpaper featuring 8,000+ scientifically accurate stars with realistic colors and smooth 3D rotation. Optimized for ultrawide monitors.
 
-**Live Demo:** https://amponce.github.io/cosmos-wallpaper
 
 ## Features
 
